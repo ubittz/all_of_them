@@ -4,6 +4,7 @@ import 'package:all_of_them/profile/view/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:all_of_them/profile/view/order_detail_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/const/text_styles.dart';
@@ -202,7 +203,12 @@ class OrderCard extends StatelessWidget {
         const SizedBox(width: 8.0),
         Expanded(
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              context.pushNamed(
+                OrderDetailScreen.routeName,
+                pathParameters: {'id': id},
+              );
+            },
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
