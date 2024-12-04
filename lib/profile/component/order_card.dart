@@ -134,7 +134,6 @@ class OrderCard extends StatelessWidget {
                       PaymentScreen.routeName,
                       pathParameters: {"id": id},
                     );
-                    context.pushNamed(PaymentScreen.routeName);
                   },
                   child: Container(
                     decoration: BoxDecoration(
