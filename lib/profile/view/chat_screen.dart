@@ -22,19 +22,13 @@ class ChatScreen extends ConsumerStatefulWidget {
   @override
   ConsumerState<ChatScreen> createState() => _ChatScreenState();
 }
-
 class _ChatScreenState extends ConsumerState<ChatScreen> {
-  bool isAnswer = false; // 나
-  bool isQuestion = false;
-
-  String answer = '';
-
+  List<Map<String, String>> chatMessages = []; // 채팅 메시지 리스트
   TextEditingController controller = TextEditingController();
 
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
   }
 
@@ -63,30 +57,56 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               ),
             ),
             const SizedBox(height: 20.0),
-            _renderAnswer(title: answer),
-            _renderQuestion(
-              title: '안녕하세요!\n${order.title}입니다!',
-              onChanged: (String value) {},
-              mainImageUrl: order.mainImageUrl,
+            Expanded(
+              child: ListView.builder(
+                itemCount: chatMessages.length,
+                itemBuilder: (context, index) {
+                  final message = chatMessages[index];
+                  return message['type'] == 'answer'
+                      ? _renderAnswer(title: message['message']!)
+                      : _renderQuestion(
+                          title: message['message']!,
+                          mainImageUrl: order.mainImageUrl,
+                        );
+                },
+              ),
             ),
-            const Spacer(),
             CustomTextFormField(
               controller: controller,
-              hintText: "채팅입력",
-              onChanged: (String value) {
-                if (!isAnswer) {
-                  answer = value;
-                }
+              hintText: "채팅 입력",
+              onEditingComplete: () {
+                setState(() {
+                  if (controller.text.isNotEmpty) {
+                    final userMessage = controller.text;
+
+                    chatMessages.add({
+                      'type': 'answer',
+                      'message': userMessage,
+                    });
+
+                    // 두 번째 이후 대답은 사용자의 입력을 따라함
+                    if (chatMessages
+                        .where((msg) => msg['type'] == 'question')
+                        .isNotEmpty) {
+                      chatMessages.add({
+                        'type': 'question',
+                        'message': userMessage, // 사용자의 말을 따라함
+                      });
+                    } else {
+                      chatMessages.add({
+                        'type': 'question',
+                        'message': '안녕하세요!\n${order.title}입니다!',
+                      });
+                    }
+
+                    controller.clear(); 
+                  }
+                });
               },
+              onChanged: (String value) {},
               onSaved: (String? newValue) {},
               validator: (String? value) {
                 return null;
-              },
-              onEditingComplete: () {
-                setState(() {
-                  controller.clear();
-                  isAnswer = true;
-                });
               },
               suffixIcon: PhosphorIcon(
                 PhosphorIcons.magnifyingGlass(),
@@ -102,66 +122,53 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   Widget _renderQuestion({
     required String title,
     required String mainImageUrl,
-    required ValueChanged<String> onChanged,
   }) {
-    return AnimatedContainer(
-      height: isAnswer ? 160 : 0,
-      duration: const Duration(seconds: 2),
-      curve: Curves.fastOutSlowIn,
-      child: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20.0),
-            Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1.0, color: MyColor.middleGrey),
-                      borderRadius: BorderRadius.circular(100.0)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100.0),
-                    child: Image.asset(
-                      mainImageUrl,
-                      height: 48.0,
-                      width: 48.0,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12.0),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: MyColor.lightGrey,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(12.0),
-                      bottomLeft: Radius.circular(12.0),
-                      bottomRight: Radius.circular(12.0),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 8.0),
-                    child: Text(
-                      title,
-                      style: MyTextStyle.body16R,
-                    ),
-                  ),
-                ),
-              ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(width: 1.0, color: MyColor.middleGrey),
+              borderRadius: BorderRadius.circular(100.0),
             ),
-          ],
-        ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100.0),
+              child: Image.asset(
+                mainImageUrl,
+                height: 48.0,
+                width: 48.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12.0),
+          Container(
+            decoration: const BoxDecoration(
+              color: MyColor.lightGrey,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(12.0),
+                bottomLeft: Radius.circular(12.0),
+                bottomRight: Radius.circular(12.0),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 12.0, vertical: 8.0),
+              child: Text(
+                title,
+                style: MyTextStyle.body16R,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _renderAnswer({required String title}) {
-    return AnimatedContainer(
-      height: isAnswer ? 48 : 0,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.fastOutSlowIn,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
