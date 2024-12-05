@@ -4,7 +4,9 @@ import 'package:all_of_them/profile/view/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:all_of_them/profile/view/order_detail_screen.dart';
+import 'package:all_of_them/partner/view/partner_detail_screen.dart';
+import 'package:all_of_them/place/view/place_detail_screen.dart';
+import 'package:all_of_them/festival/view/festival_detail_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/const/text_styles.dart';
@@ -13,7 +15,7 @@ import '../model/order_model.dart';
 class OrderCard extends StatelessWidget {
   final String id;
   final String title;
-  final String itemType;
+  final ItemType itemType;
   final OrderStatus orderStatus;
   final String mainImageUrl;
   final DateTime createdDt;
@@ -203,9 +205,12 @@ class OrderCard extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              print("아이디값: $id");
-              context.pushNamed(
-                OrderDetailScreen.routeName,
+              context.goNamed(
+                switch (itemType) {
+                  ItemType.partner => PartnerDetailScreen.routeName,
+                  ItemType.place => PlaceDetailScreen.routeName,
+                  ItemType.festival => FestivalDetailScreen.routeName,
+                },
                 pathParameters: {'id': id},
               );
             },

@@ -6,7 +6,6 @@ import 'package:all_of_them/common/const/colors.dart';
 import 'package:all_of_them/common/const/text_styles.dart';
 import 'package:all_of_them/common/layout/default_app_bar.dart';
 import 'package:all_of_them/common/layout/default_layout.dart';
-import 'package:all_of_them/common/utils/data_utils.dart';
 import 'package:all_of_them/common/view/completion_screen.dart';
 import 'package:all_of_them/festival/provider/festival_provider.dart';
 import 'package:all_of_them/profile/model/order_model.dart';
@@ -47,7 +46,7 @@ class FestivalDetailScreen extends ConsumerWidget {
                   order: OrderModel(
                     id: id,
                     title: festival.name,
-                    itemType: "festival",
+                    itemType: ItemType.festival,
                     orderStatus: OrderStatus.approval,
                     mainImageUrl: festival.mainImageUrl,
                     createdDt: DateTime.now(),

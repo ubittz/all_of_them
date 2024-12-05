@@ -47,7 +47,7 @@ class PartnerDetailScreen extends ConsumerWidget {
                   order: OrderModel(
                     id: id,
                     title: partner.name,
-                    itemType: "partner",
+                    itemType: ItemType.partner,
                     orderStatus: OrderStatus.approval,
                     mainImageUrl: partner.mainImageUrl,
                     createdDt: DateTime.now(),

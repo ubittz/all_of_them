@@ -62,12 +62,13 @@ class OrderProvider extends StateNotifier<List<OrderModel>> {
     ];
 
     final titlesAndImagesAndItemTypes = [
-      ...partners.map((e) => [e.name, e.mainImageUrl, 'partner']),
-      ...places.map((e) => [e.name, e.mainImageUrl, 'place']),
-      ...festivals.map((e) => [e.name, e.mainImageUrl, 'festival']),
+      ...partners.map((e) => [e.name, e.mainImageUrl, ItemType.partner]),
+      ...places.map((e) => [e.name, e.mainImageUrl, ItemType.place]),
+      ...festivals.map((e) => [e.name, e.mainImageUrl, ItemType.festival]),
     ];
-    final items = DataUtils.getRandomShuffledList<List<String>>(
-        titlesAndImagesAndItemTypes);
+    final items = DataUtils.getRandomShuffledList<List<Object>>(
+      titlesAndImagesAndItemTypes,
+    );
 
     return List.generate(10, (index) {
       final randomMonth = DataUtils.getRandomInt(dividerNumber: now.month);
@@ -77,12 +78,12 @@ class OrderProvider extends StateNotifier<List<OrderModel>> {
 
       return OrderModel(
         id: ids[index],
-        title: item[0],
-        itemType: item[2],
+        title: item[0] as String,
+        itemType: item[2] as ItemType,
         orderStatus: randomMonth == now.month - 1
             ? OrderStatus.approval
             : OrderStatus.complete,
-        mainImageUrl: item[1],
+        mainImageUrl: item[1] as String,
         createdDt: DateTime(2024, randomMonth, randomDay, randomHour, 0),
       );
     });

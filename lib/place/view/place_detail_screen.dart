@@ -46,7 +46,7 @@ class PlaceDetailScreen extends ConsumerWidget {
                   order: OrderModel(
                     id: id,
                     title: place.name,
-                    itemType: "place",
+                    itemType: ItemType.place,
                     orderStatus: OrderStatus.approval,
                     mainImageUrl: place.mainImageUrl,
                     createdDt: DateTime.now(),

@@ -7,10 +7,16 @@ enum OrderStatus {
   final String label;
 }
 
+enum ItemType {
+  partner,
+  place,
+  festival,
+}
+
 class OrderModel {
   String id;
   String title;
-  String itemType;
+  ItemType itemType;
   OrderStatus orderStatus;
   String mainImageUrl;
   DateTime createdDt;
@@ -27,7 +33,7 @@ class OrderModel {
   OrderModel copyWith({
     String? id,
     String? title,
-    String? itemType,
+    ItemType? itemType,
     OrderStatus? orderStatus,
     String? mainImageUrl,
     DateTime? createdDt,
