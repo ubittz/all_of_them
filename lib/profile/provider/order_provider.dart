@@ -54,13 +54,20 @@ class OrderProvider extends StateNotifier<List<OrderModel>> {
     final partners = ref.read(partnerProvider);
     final places = ref.read(placeProvider);
     final festivals = ref.read(festivalProvider);
+
+    final ids = [
+      ...partners.map((e) => e.id),
+      ...places.map((e) => e.id),
+      ...festivals.map((e) => e.id),
+    ];
+
     final titlesAndImagesAndItemTypes = [
       ...partners.map((e) => [e.name, e.mainImageUrl, 'partner']),
       ...places.map((e) => [e.name, e.mainImageUrl, 'place']),
       ...festivals.map((e) => [e.name, e.mainImageUrl, 'festival']),
     ];
-    final items =
-        DataUtils.getRandomShuffledList<List<String>>(titlesAndImagesAndItemTypes);
+    final items = DataUtils.getRandomShuffledList<List<String>>(
+        titlesAndImagesAndItemTypes);
 
     return List.generate(10, (index) {
       final randomMonth = DataUtils.getRandomInt(dividerNumber: now.month);
@@ -69,7 +76,7 @@ class OrderProvider extends StateNotifier<List<OrderModel>> {
       final item = items[index];
 
       return OrderModel(
-        id: DataUtils.getUuid(),
+        id: ids[index],
         title: item[0],
         itemType: item[2],
         orderStatus: randomMonth == now.month - 1

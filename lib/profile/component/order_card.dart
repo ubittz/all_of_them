@@ -41,7 +41,7 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double cardWidth = MediaQuery.of(context).size.width - 24;
+    // final double cardWidth = MediaQuery.of(context).size.width - 24;
 
     return Container(
       color: MyColor.white,
@@ -51,7 +51,7 @@ class OrderCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'No.${id.substring(0, 6).toUpperCase()}',
+                'No.${id.length >= 6 ? id.substring(0, 6).toUpperCase() : id.toUpperCase()}',
                 style: MyTextStyle.body16B,
               ),
               Container(
@@ -60,8 +60,8 @@ class OrderCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50.0),
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 4.0),
                   child: Text(
                     orderStatus.label,
                     style: MyTextStyle.description14M.copyWith(
@@ -203,6 +203,7 @@ class OrderCard extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
+              print("아이디값: $id");
               context.pushNamed(
                 OrderDetailScreen.routeName,
                 pathParameters: {'id': id},

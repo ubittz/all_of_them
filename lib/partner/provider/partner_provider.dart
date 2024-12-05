@@ -5,12 +5,12 @@ import 'package:all_of_them/partner/model/partner_model.dart';
 import 'package:all_of_them/partner/provider/partner_category_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 final partnerRandomByCategoryProvider = Provider<List<PartnerModel>>((ref) {
   final partners = ref.watch(partnerProvider);
   final selectedCategory = ref.watch(selectedPartnerCategoryProvider);
 
-  final randomPartners = DataUtils.getRandomShuffledList<PartnerModel>(partners);
+  final randomPartners =
+      DataUtils.getRandomShuffledList<PartnerModel>(partners);
   return randomPartners;
 });
 
@@ -35,7 +35,7 @@ class PartnerStateNotifier extends StateNotifier<List<PartnerModel>> {
       partnerData.keys.length,
       (index) {
         return PartnerModel(
-          id: index.toString(),
+          id: partnerData.values.elementAt(index)[5],
           name: partnerData.keys.elementAt(index),
           job: partnerData.values.elementAt(index)[0],
           shortDescription: partnerData.values.elementAt(index)[1],

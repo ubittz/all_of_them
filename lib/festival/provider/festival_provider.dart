@@ -10,11 +10,13 @@ final festivalRandomByCategoryProvider = Provider<List<FestivalModel>>((ref) {
   final festivals = ref.watch(festivalProvider);
   final selectedCategory = ref.watch(selectedFestivalCategoryProvider);
 
-  final randomFestivals = DataUtils.getRandomShuffledList<FestivalModel>(festivals);
+  final randomFestivals =
+      DataUtils.getRandomShuffledList<FestivalModel>(festivals);
   return randomFestivals;
 });
 
-final festivalDetailProvider = Provider.family<FestivalModel, String>((ref, id) {
+final festivalDetailProvider =
+    Provider.family<FestivalModel, String>((ref, id) {
   final product =
       ref.watch(festivalProvider).firstWhere((element) => element.id == id);
   return product;
@@ -35,7 +37,7 @@ class FestivalStateNotifier extends StateNotifier<List<FestivalModel>> {
       festivalData.keys.length,
       (index) {
         return FestivalModel(
-          id: index.toString(),
+          id: festivalData.values.elementAt(index)[4],
           name: festivalData.keys.elementAt(index),
           shortDescription: festivalData.values.elementAt(index)[0],
           description: festivalData.values.elementAt(index)[1],

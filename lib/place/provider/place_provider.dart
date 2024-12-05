@@ -35,7 +35,7 @@ class PlaceStateNotifier extends StateNotifier<List<PlaceModel>> {
       placeData.keys.length,
       (index) {
         return PlaceModel(
-          id: index.toString(),
+          id: placeData.values.elementAt(index).last,
           name: placeData.keys.elementAt(index),
           shortDescription: placeData.values.elementAt(index)[0],
           description: placeData.values.elementAt(index)[1],

@@ -44,15 +44,15 @@ class PartnerDetailScreen extends ConsumerWidget {
               pathParameters: {"title": "매칭 요청이\n정상적으로\n완료 되었습니다."},
             );
             ref.read(orderProvider.notifier).addOrder(
-              order: OrderModel(
-                id: DataUtils.getUuid(),
-                title: partner.name,
-                itemType: "partner",
-                orderStatus: OrderStatus.approval,
-                mainImageUrl: partner.mainImageUrl,
-                createdDt: DateTime.now(),
-              ),
-            );
+                  order: OrderModel(
+                    id: id,
+                    title: partner.name,
+                    itemType: "partner",
+                    orderStatus: OrderStatus.approval,
+                    mainImageUrl: partner.mainImageUrl,
+                    createdDt: DateTime.now(),
+                  ),
+                );
           },
           child: const Text('매칭 요청'),
         ),

@@ -6,7 +6,6 @@ import 'package:all_of_them/common/const/colors.dart';
 import 'package:all_of_them/common/const/text_styles.dart';
 import 'package:all_of_them/common/layout/default_app_bar.dart';
 import 'package:all_of_them/common/layout/default_layout.dart';
-import 'package:all_of_them/common/utils/data_utils.dart';
 import 'package:all_of_them/common/view/completion_screen.dart';
 import 'package:all_of_them/place/provider/place_provider.dart';
 import 'package:all_of_them/profile/model/order_model.dart';
@@ -44,15 +43,15 @@ class PlaceDetailScreen extends ConsumerWidget {
               pathParameters: {"title": "매칭 요청이\n정상적으로\n완료 되었습니다."},
             );
             ref.read(orderProvider.notifier).addOrder(
-              order: OrderModel(
-                id: DataUtils.getUuid(),
-                title: place.name,
-                itemType: "place",
-                orderStatus: OrderStatus.approval,
-                mainImageUrl: place.mainImageUrl,
-                createdDt: DateTime.now(),
-              ),
-            );
+                  order: OrderModel(
+                    id: id,
+                    title: place.name,
+                    itemType: "place",
+                    orderStatus: OrderStatus.approval,
+                    mainImageUrl: place.mainImageUrl,
+                    createdDt: DateTime.now(),
+                  ),
+                );
           },
           child: const Text('매칭 요청'),
         ),
