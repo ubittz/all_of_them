@@ -92,8 +92,6 @@ class HomeScreen extends ConsumerWidget {
             ),
             PartnerHorizontalItemList(partners: partners),
             const SizedBox(height: 40.0),
-            Image.asset(ImagePath.bandBanner),
-            const SizedBox(height: 40.0),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.0),
               child: ContainerTitle(title: '모두포에서 추천하는 공간'),
