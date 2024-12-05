@@ -481,6 +481,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-/asset
 lib/common/const/dummy.dart
 lib/my_settings.dart
