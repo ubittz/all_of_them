@@ -483,5 +483,4 @@ app.*.map.json
 
 /asset
 lib/common/const/dummy.dart
-lib/common/const/data.dart
 lib/my_settings.dart
